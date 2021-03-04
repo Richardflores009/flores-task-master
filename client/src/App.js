@@ -3,28 +3,28 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
-  state = {
-    data: null
-  };
+  // state = {
+  //   data: null
+  // };
 
-  componentDidMount() {
-    // call our fetch function below once the compnent mounts
-    this.callBackendAPI()
-      .then(res => this.setState({ data: res.tasks }))
-      .catch(err => console.log(err));
-  }
+  // componentDidMount() {
+  //   // call our fetch function below once the compnent mounts
+  //   this.callBackendAPI()
+  //     .then(res => this.setState({ data: res.tasks }))
+  //     .catch(err => console.log(err));
+  // }
 
-  // Fetches our GET route from the server.
-  // (Note the route we are fetching matches the GET route from server.js)
-  callBackendAPI = async () => {
-    const response = await fetch('/task');
-    const body = await response.json();
-    console.log(body)
-    if (response.status !== 200) {
-      throw Error(body.message)
-    }
-    return body
-  };
+  // // Fetches our GET route from the server.
+  // // (Note the route we are fetching matches the GET route from server.js)
+  // callBackendAPI = async () => {
+  //   const response = await fetch('/task');
+  //   const body = await response.json();
+  //   console.log(body)
+  //   if (response.status !== 200) {
+  //     throw Error(body.message)
+  //   }
+  //   return body
+  // };
   render() {
     return (
       <div className="App">
@@ -33,7 +33,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
           </header>
           {/* // Render the newly fetched data inside of this.state.data  */}
-          <p className="App-intro">{this.state.data}</p>
+          {/* <p className="App-intro">{this.state.data}</p> */}
       </div>
     );
 
