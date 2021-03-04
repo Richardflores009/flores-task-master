@@ -13,9 +13,9 @@
      owner: {
          type: Schema.Types.ObjectId,
          required: true,
+         unique: true,
          ref: 'User'
      }
-
  })
 
  const Task = mongoose.model('Task', taskSchema)
