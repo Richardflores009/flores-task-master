@@ -3,23 +3,37 @@ const {Schema} = mongoose
 const Task = require('./Task')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const validator = require('validator')
 
 const userSchema = new Schema({
     firstName: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     lastName: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     email: {
         type: String,
-        required: true
+        unique: true,
+        required: true,
+        trim: true,
+        validate: {
+            validator:  validator.isEmail,
+            message: `Is not a valid email`
+        }
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        validate: {
+            validator: validator.isStrongPassword,
+            message: 'Must contain 8 characters, 1 lowercase, 1 uppercase and 1 symbol'
+        },
+        trim: true
     },
     friends: [
         {

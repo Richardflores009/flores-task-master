@@ -4,7 +4,9 @@ const {Schema} = mongoose
 const chatSchema = new Schema({
     message: {
         type: String,
-        required: true
+        required: true,
+        minLength: 1,
+        trim: true
     },
     owner: {
         type: Schema.Types.ObjectId,

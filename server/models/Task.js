@@ -4,11 +4,13 @@
  const taskSchema = new Schema({
      title: {
          type: String,
-         required: true
+         required: true,
+         default: 'Untitled'
      },
      body: {
          type: String,
-         required: true
+         required: true,
+         minLength: 1
      },
      owner: {
          type: Schema.Types.ObjectId,
