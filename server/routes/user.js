@@ -23,12 +23,36 @@ router.post('/user/login', async (req, res) => {
     const password = req.body.password
 
     const user = await User.compareCredentials(email, password)
-
+    const token = await user.generateJWT()
     try {
         await user.save()
-        res.send(user)
+        res.send({user, token})
 
     } catch (e) {
+        res.status(500).send(e)
+    }
+})
+
+router.post('/user/logout',auth, async (req, res) => {
+
+    try {
+        req.user.tokens = req.user.tokens.filter((token) => {
+            return token.token !== req.token
+        })
+
+        await req.user.save()
+        res.send()
+    } catch (e) {
+        res.status(500).send(e)
+    }
+})
+
+router.post('/user/logoutAll', auth, async (req, res) => {
+    try {
+        req.user.tokens = []
+        req.user.save()
+        res.send()
+    } catch(e) {
         res.status(500).send(e)
     }
 })
