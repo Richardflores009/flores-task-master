@@ -23,6 +23,9 @@ router.post('/user/login', async (req, res) => {
     const password = req.body.password
 
     const user = await User.compareCredentials(email, password)
+    if (!user) {
+        return res.status(404).send({error: "No user with those credentials"})
+    }
     const token = await user.generateJWT()
     try {
         await user.save()
@@ -69,7 +72,7 @@ router.get('/user/me', auth, async (req, res) => {
     }
 })
 
-router.get('/user/:id', async (req, res) => {
+router.get('/user/:id', auth, async (req, res) => {
     const id = req.params.id
     try {
         const user = await User.findById(id)
@@ -102,13 +105,31 @@ router.patch('/user/me', auth, async (req, res) => {
     }
 })
 
+router.patch('/user/addFriend', auth, async (req, res) => {
+    const friendId = req.body.friends
+    const repeatValue = req.user.friends.filter((friend) => {
+        return friend._id.toString() === friendId
+    })
+
+    if (repeatValue.length) {
+        return res.status(500).send({error: "User Already friend"})
+    }
+    try {
+        const updateCurrent = await User.findOneAndUpdate({_id: req.user._id}, {$push: {friends: {_id: friendId}}}, {new:true})
+        updateCurrent.save()
+        res.send(updateCurrent)
+    } catch (e) {
+        res.status(500).send(e)
+    }
+})
+
 router.delete('/user/me', auth, async (req, res) => {
-    const user = req.user
+    const users = req.user
     
     try {
-        await user.remove()
-        await user.save()
-        res.send(user)
+        await users.remove()
+        await users.save()
+        res.send()
     } catch (e) {
         res.status(500).send(e)
     }

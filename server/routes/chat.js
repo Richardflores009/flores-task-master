@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const Chat = require('../models/Chat')
+const auth = require('../middleware/auth')
 
-router.post('/chat', async (req, res) => {
+router.post('/chat', auth, async (req, res) => {
     try {
-        const chat = await Chat(req.body)
+        const chat = await Chat({owner: req.user._id, ...req.body})
         await chat.save()
         res.send(chat)
     } catch (e) {

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const {Schema} = mongoose
 const Task = require('./Task')
+const Chat = require('./Chat')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const validator = require('validator')
@@ -35,12 +36,12 @@ const userSchema = new Schema({
         },
         trim: true
     },
-    friends: [
-        {
+    friends: [{
+        user: {
             type: Schema.Types.ObjectId,
             ref: 'User'
         }
-    ],
+    }],
     tokens: [
         {
             token: {
@@ -74,23 +75,23 @@ userSchema.methods.generateJWT = async function(cb) {
 userSchema.statics.compareCredentials = async function(email, password) {
     
     const user = await this.findOne({email: email})
+   
+        const isMatch = await bcrypt.compare(password, user.password)
 
-    const isMatch = await bcrypt.compare(password, user.password)
-
-    if (!isMatch) {
-        new Error({error: 'Unable to login'})
-    }
-
-    return user
-
+        if (isMatch) {
+            return user
+        } 
 }
 
 userSchema.pre('remove', async function(next) {
     const user = this
     await Task.deleteMany({owner: user._id})
+    await Chat.deleteMany({owner: user._id})
+    await user.model('User').updateMany({ }, {"$pull": {"friends": {_id: user._id}}}, {"multi": true}, next)
 
     next()
 })
+
 
 
 const User = mongoose.model('User', userSchema)

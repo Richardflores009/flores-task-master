@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const {Schema} = mongoose
+const Chat = require('./Chat')
 
 const roomSchema = new Schema({
     roomName: {
@@ -10,13 +11,11 @@ const roomSchema = new Schema({
     owner: {
         type: Schema.Types.ObjectId,
         required: true,
-        unique: true,
         ref: 'User'
     },
     users: [{
         user: {
             type: Schema.Types.ObjectId,
-            unique: true,
             ref: 'User'
         }
     }],
@@ -28,7 +27,12 @@ const roomSchema = new Schema({
     }]
 })
 
+roomSchema.pre('remove', async function(next) {
+    const room = this
 
-const User = mongoose.model('Room', roomSchema)
+    await Chat.deleteMany({room: room._id})
+})
 
-module.exports = User
+const Room = mongoose.model('Room', roomSchema)
+
+module.exports = Room
