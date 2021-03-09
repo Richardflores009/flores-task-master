@@ -1,5 +1,7 @@
 const express = require('express')
 const app = express()
+const httpServer = require('http').Server(app);
+const io = require('socket.io')(httpServer)
 require('./db/mongoose');
 
 const userRoutes = require('./routes/user')
@@ -16,7 +18,18 @@ app.use(chatRoutes)
 app.use(roomRoutes)
 
 
-app.listen(port, () => {
+//Whenever someone connects this gets executed
+io.on('connection', function(socket) {
+    console.log('A user connected');
+ 
+    //Whenever someone disconnects this piece of code executed
+    socket.on('disconnect', function () {
+       console.log('A user disconnected');
+    });
+ });
+ 
+
+httpServer.listen(port, () => {
     console.log(`listening on port ${port}`)
 })
 
