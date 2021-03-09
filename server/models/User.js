@@ -84,12 +84,23 @@ userSchema.statics.compareCredentials = async function(email, password) {
         } 
 }
 
+userSchema.methods.toJSON = function() {
+    const user = this
+    const userObject = user.toObject()
+
+    delete userObject.password
+    delete userObject.tokens
+
+    return userObject
+}
+
 userSchema.pre('remove', async function(next) {
     const user = this
     await Task.deleteMany({owner: user._id})
     await Chat.deleteMany({owner: user._id})
-    await Room.deleteMany({owner: user._id})
-    await Room.deleteMany({users: {_id: user._id}})
+    await Room.updateMany({"owner": user._id}, {"$set": {"owner": "603840d5022e3d659ff2e3ce"}}, {"multi": true})
+    // await Room.updateMany({ }, {"$pull": {"owner": {_id: user._id}}}, {"multi": true, new: true})
+    // await user.model('Room').updateMany({ }, {"$pull": {owner: user._id}}, {"multi": true},next)
     await user.model('User').updateMany({ }, {"$pull": {"friends": {_id: user._id}}}, {"multi": true}, next)
 
     next()

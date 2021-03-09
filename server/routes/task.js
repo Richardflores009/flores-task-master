@@ -14,7 +14,7 @@ router.post('/tasks', auth, async (req, res) => {
     }
 })
 
-router.get('/tasks', async (req, res) => {
+router.get('/tasks', auth, async (req, res) => {
     try {
         const tasks = await Task.find({})
         res.send(tasks)
@@ -23,12 +23,12 @@ router.get('/tasks', async (req, res) => {
     }
 })
 
-router.get('/tasks/:id', async (req, res) => {
+router.get('/tasks/:id', auth, async (req, res) => {
     const id = req.params.id
     try {
-        const task = await Task.findById(id)
+        const task = await Task.findOne({_id:id, owner: req.user._id})
         if (!task) {
-            return new Error({error: 'No task found'})
+            return res.status(404).send({error: 'no task found'})
         }
         await task.save()
         res.send(task)
@@ -37,12 +37,12 @@ router.get('/tasks/:id', async (req, res) => {
     }
 })
 
-router.patch('/tasks/:id', async (req, res) => {
+router.patch('/tasks/:id', auth, async (req, res) => {
     const id = req.params.id
     try {
-        const tasks = await Task.findByIdAndUpdate(id, req.body, {new: true, runValidators: true})
+        const tasks = await Task.findOneAndUpdate({_id: id, owner: req.user._id}, req.body, {new: true, runValidators: true})
         if (!tasks) {
-            return new Error({error: 'No tasks found'})
+            return res.status(404).send({error: 'No tasks found'})
         }
         await tasks.save()
         res.send(tasks)
@@ -51,11 +51,14 @@ router.patch('/tasks/:id', async (req, res) => {
     }
 })
 
-router.delete('/tasks/:id', async (req, res) => {
-    const id = req.params.id
+router.delete('/tasks/:id', auth, async (req, res) => {
+    const _id = req.params.id
     try {
-        const task = await Task.findByIdAndDelete(id)
-        task.save()
+        const task = await Task.findOne({_id, owner: req.user._id})
+        if (!task) {
+            return res.status(404).send({error: 'No task to remove'})
+        }
+        await task.remove()
         res.send(task)
     } catch (e) {
         res.status(500).send(e)
