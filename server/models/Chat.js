@@ -19,6 +19,12 @@ const chatSchema = new Schema({
     }
 })
 
+chatSchema.pre('delete', async function (next) {
+    const chat = this;
+
+    chat.updateMany({messages: {_id: chat._id}})
+})
+
 const Chat = mongoose.model('Chat', chatSchema)
 
 

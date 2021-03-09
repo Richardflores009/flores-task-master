@@ -36,7 +36,7 @@ router.patch('/room/:id', auth, async (req, res) => {
     }
 
     try {
-        const room = await Room.findByIdAndUpdate(id, req.body, {new:true, runValidators:true})
+        const room = await Room.findByIdAndUpdate(id, {$push: {...req.body}}, {new:true, runValidators:true})
         if (!room) {
             return res.status(404).send()
         }

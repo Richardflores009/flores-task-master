@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const {Schema} = mongoose
 const Task = require('./Task')
 const Chat = require('./Chat')
+const Room = require('./Room')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const validator = require('validator')
@@ -87,6 +88,8 @@ userSchema.pre('remove', async function(next) {
     const user = this
     await Task.deleteMany({owner: user._id})
     await Chat.deleteMany({owner: user._id})
+    await Room.deleteMany({owner: user._id})
+    await Room.deleteMany({users: {_id: user._id}})
     await user.model('User').updateMany({ }, {"$pull": {"friends": {_id: user._id}}}, {"multi": true}, next)
 
     next()
