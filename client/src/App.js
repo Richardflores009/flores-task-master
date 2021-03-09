@@ -1,31 +1,15 @@
 import React, { Component } from 'react'
+import socketClient  from "socket.io-client";
 import logo from './logo.svg';
 import './App.css';
+const SERVER = 'http://localhost:3001/'
 
-class App extends Component {
-  // state = {
-  //   data: null
-  // };
+function App() {
+  const socket = socketClient(SERVER)
+  socket.on('connection', () => {
+    console.log("I'm connected with the back-end")
+  })
 
-  // componentDidMount() {
-  //   // call our fetch function below once the compnent mounts
-  //   this.callBackendAPI()
-  //     .then(res => this.setState({ data: res.tasks }))
-  //     .catch(err => console.log(err));
-  // }
-
-  // // Fetches our GET route from the server.
-  // // (Note the route we are fetching matches the GET route from server.js)
-  // callBackendAPI = async () => {
-  //   const response = await fetch('/task');
-  //   const body = await response.json();
-  //   console.log(body)
-  //   if (response.status !== 200) {
-  //     throw Error(body.message)
-  //   }
-  //   return body
-  // };
-  render() {
     return (
       <div className="App">
         <header className="App-header">
@@ -36,8 +20,6 @@ class App extends Component {
           {/* <p className="App-intro">{this.state.data}</p> */}
       </div>
     );
-
-  }
 }
 
 export default App;
