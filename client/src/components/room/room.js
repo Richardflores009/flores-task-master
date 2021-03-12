@@ -1,22 +1,16 @@
 import React from 'react';
-import { positions } from '@material-ui/system';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-
 import IconButton from '@material-ui/core/IconButton';
-
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-
+import SendIcon from '@material-ui/icons/Send';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import useStyles from './style'
 
-
 import Friends from './friends/friends'
-
-
 
 function ResponsiveDrawer() {
 
@@ -26,11 +20,7 @@ function ResponsiveDrawer() {
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
-  };
-
-  
-
-  
+  };  
 
   return (
     <div className={classes.root}>
@@ -56,16 +46,10 @@ function ResponsiveDrawer() {
 
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
-      <label htmlFor="icon-button-file">
-        <IconButton color="primary" aria-label="upload picture" component="span">
-          <PhotoCamera />
-        </IconButton>
-      </label>
+        
         <TextField
           id="outlined-full-width"
-          label="Label"
-          style={{ margin: 8 }}
+          label="Label"  
           placeholder="Placeholder"
           fullWidth
           margin="normal"
@@ -76,6 +60,24 @@ function ResponsiveDrawer() {
           variant="outlined"
           position="absolute"
           bottom="0"
+          InputProps={{
+            endAdornment: (
+              <>
+              <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
+            <label htmlFor="icon-button-file">
+              <IconButton color="primary" aria-label="upload picture" component="span">
+                <PhotoCamera />
+              </IconButton>
+            </label>
+              <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
+            <label htmlFor="icon-button-file">
+              <IconButton color="primary" aria-label="upload picture" component="span">
+                <SendIcon />
+              </IconButton>
+            </label>
+              </>
+            ),
+          }}
         />
       </main>
       

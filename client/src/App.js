@@ -1,10 +1,13 @@
 import React,{ useEffect } from 'react'
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import { loginUser } from './actions/user'
 import Room from './components/room/room'
-import {Header} from './global/Header'
+import Login from './components/login/login'
+import SignUp from './components/SignUp/signUp'
+import TaskForm from './components/room/tasks/taskForm'
+
 
 
 const App = () => {
@@ -17,9 +20,14 @@ const App = () => {
 
   return (
     <Router>
-      <Header />
+      <Link to="/">
+        <h1>Room</h1>
+      </Link>
       <Switch>
         <Route path="/" exact component={Room}/>
+        <Route path="/login" exact component={Login}/>
+        <Route path="/SignUp" exact component={SignUp}/>
+        <Route path="/taskForm" exact component={TaskForm}/>
         
       </Switch>
       </Router>

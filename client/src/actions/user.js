@@ -10,3 +10,13 @@ export const loginUser = () => async (dispatch) => {
     }
     
 }
+export const fetchProfile = () => async (dispatch) => {
+    try {
+        const { data } = await api.fetchProfile();
+
+        dispatch({ type: 'FETCH_PROFILE', payload: data})
+    } catch(e) {
+        console.log(e.message)
+    }
+    
+}
