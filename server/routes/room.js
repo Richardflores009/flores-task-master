@@ -52,7 +52,7 @@ router.patch('/room/:id', auth, async (req, res) => {
     }
 })
 
-router.delete('/room', auth, async (req, res) => {
+router.delete('/room/:id', auth, async (req, res) => {
     try {
         const room = await Room.findOneAndUpdate({owner: req.user._id})
         if (!room) {

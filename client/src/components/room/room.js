@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { useDispatch } from 'react-redux'
+
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import IconButton from '@material-ui/core/IconButton';
@@ -13,8 +15,13 @@ import useStyles from './style'
 import Friends from './friends/friends'
 
 function ResponsiveDrawer() {
-
   const classes = useStyles();
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch()
+    
+  }, [dispatch])
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
 

@@ -7,16 +7,17 @@ import Room from './components/room/room'
 import Login from './components/login/login'
 import SignUp from './components/SignUp/signUp'
 import TaskForm from './components/room/tasks/taskForm'
+import Task from './components/room/tasks/task'
 
 
 
 const App = () => {
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch(loginUser())
+  // useEffect(() => {
+  //   dispatch(loginUser())
     
-  }, [dispatch])
+  // }, [dispatch])
 
   return (
     <Router>
@@ -24,10 +25,11 @@ const App = () => {
         <h1>Room</h1>
       </Link>
       <Switch>
-        <Route path="/" exact component={Room}/>
-        <Route path="/login" exact component={Login}/>
+        <Route path="/room" exact component={Room}/>
+        <Route path="/" exact component={Login}/>
         <Route path="/SignUp" exact component={SignUp}/>
         <Route path="/taskForm" exact component={TaskForm}/>
+        <Route path="/task" exact component={Task}/>
         
       </Switch>
       </Router>

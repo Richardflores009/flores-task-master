@@ -10,16 +10,19 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-
 import Container from '@material-ui/core/Container';
+
+import { loginUser } from '../../actions/user'
+import { useDispatch } from 'react-redux'
 import useStyles from './styles.js'
 
 
 function Copyright() {
+  const dispatch = useDispatch()
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link to="/" color="inherit" href="https://material-ui.com/">
         Your Website
       </Link>{' '}
       {new Date().getFullYear()}
@@ -81,7 +84,7 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link to="/" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
