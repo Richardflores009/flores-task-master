@@ -1,25 +1,29 @@
-import React,{ Component} from 'react'
+import React,{ useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
-import Join from './components/Join'
-import Chat from './components/Chat'
+import { loginUser } from './actions/user'
+import Room from './components/room/room'
 import {Header} from './global/Header'
 
 
-class App extends Component {
-  
+const App = () => {
+  const dispatch = useDispatch()
 
-  render() {
-    return (
-      <Router>
-        <Header />
-        <Switch>
-          <Route path="/" exact component={Join}/>
-          <Route path="/chat" exact component={Chat}/>
-        </Switch>
-        </Router>
+  useEffect(() => {
+    dispatch(loginUser())
+    
+  }, [dispatch])
+
+  return (
+    <Router>
+      <Header />
+      <Switch>
+        <Route path="/" exact component={Room}/>
+        
+      </Switch>
+      </Router>
     );
-  }
 }
 
 export default App;
