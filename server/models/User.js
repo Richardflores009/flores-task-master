@@ -74,8 +74,8 @@ userSchema.methods.generateJWT = async function(cb) {
 }
 
 userSchema.statics.compareCredentials = async function(email, password) {
-    
     const user = await this.findOne({email: email})
+    console.log('user',user)
    
         const isMatch = await bcrypt.compare(password, user.password)
 

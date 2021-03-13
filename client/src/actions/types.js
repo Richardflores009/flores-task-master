@@ -11,8 +11,8 @@ export const DELETE_USER = 'DELETE_USER'
 
 // ROOM TYPES
 export const CREATE_ROOM = 'CREATE_ROOM';
-export const FETCH_ROOM = 'FETCH_ROOM';
 export const FETCH_MY_ROOMS = 'FETCH_MY_ROOMS';
+export const FETCH_ONE_ROOM = 'FETCH_ONE_ROOM'
 export const UPDATE_ROOM = 'UPDATE_ROOM';
 export const DELETE_ROOM = 'DELETE_ROOM';
 

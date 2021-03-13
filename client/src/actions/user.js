@@ -1,18 +1,18 @@
 import * as api from '../api'
 
-export const signupUser = () => async (dispatch) => {
+export const signupUser = (user) => async (dispatch) => {
     try {
-        const { data } = await api.signupUser();
-
+        const { data } = await api.signupUser(user);
+        console.log(data)
         dispatch({ type: 'SIGNUP_USER', payload: data})
     } catch(e) {
-        console.log(e.message)
+        console.log(e)
     }
     
 }
-export const loginUser = () => async (dispatch) => {
+export const loginUser = (loginData) => async (dispatch) => {
     try {
-        const { data } = await api.loginUser();
+        const { data } = await api.loginUser(loginData);
 
         dispatch({ type: 'LOGIN_USER', payload: data})
     } catch(e) {

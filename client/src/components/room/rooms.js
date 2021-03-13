@@ -1,4 +1,6 @@
 import React from 'react'
+import {useSelector} from 'react-redux'
+
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -13,8 +15,10 @@ import useStyles from './style'
 
 
 const Rooms = () => {
-const classes = useStyles()
+  const room = useSelector((state) => state.room)
+  const classes = useStyles()
 
+  console.log(room)
     return (
         <>
         <Drawer

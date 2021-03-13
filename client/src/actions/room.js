@@ -13,8 +13,21 @@ export const createRoom = () => async (dispatch) => {
 export const fetchRoom = () => async (dispatch) => {
     try {
         const { data } = await api.fetchRoom();
-
+        console.log(data)
+        
         dispatch({ type: 'FETCH_MY_ROOMS', payload: data})
+    } catch(e) {
+        console.log(e.message)
+    }
+    
+}
+export const fetchOneRoom = () => async (dispatch) => {
+    try {
+        const { data } = await api.fetchOneRoom();
+        console.log(data)
+
+
+        dispatch({ type: 'FETCH_ONE_ROOMS', payload: data})
     } catch(e) {
         console.log(e.message)
     }

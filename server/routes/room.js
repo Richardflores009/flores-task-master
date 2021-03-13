@@ -13,14 +13,47 @@ router.post('/room', auth, async (req, res) => {
     }
 })
 
-router.get('/room', auth, async (req, res) => {
+// router.get('/room', auth, async (req, res) => {
+//     try {
+//         const room = await Room
+//         .find({owner: req.user._id})
+//         // .populate('owner')
+//         // .populate('messages.message')
+//         // .populate('users.user')
+
+//         if (!room) {
+//             res.status(404).send({error: 'No room by that name found'})
+//         }
+
+//         res.send(room)
+//     } catch (e) {
+//         res.status(500).send(e)
+//     }
+// })
+router.get('/room', async (req, res) => {
     try {
-        const room = await Room
-        .find({owner: req.user._id})
+        const room = await Room.find({})
+
+        if (!room) {
+            res.status(404).send({error: 'No room by that name found'})
+        }
+
+        res.send(room)
+    } catch (e) {
+        res.status(500).send(e)
+    }
+})
+
+router.get('/room/:id', async (req, res) => {
+    const _id = req.params._id
+    try {
+        const room = await Room.findById(_id)
+        // .find({owner: req.user._id})
         // .populate('owner')
         // .populate('messages.message')
         // .populate('users.user')
-
+        
+        console.log(room)
         if (!room) {
             res.status(404).send({error: 'No room by that name found'})
         }

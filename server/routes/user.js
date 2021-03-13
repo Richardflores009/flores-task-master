@@ -7,7 +7,7 @@ const auth = require('../middleware/auth')
 
 router.post('/user', async (req, res) => {
     const user = new User(req.body)
-
+    console.log('route',user)
     try {
         const token = await user.generateJWT()
         await user.save()
@@ -21,6 +21,9 @@ router.post('/user', async (req, res) => {
 router.post('/user/login', async (req, res) => {
     const email = req.body.email
     const password = req.body.password
+
+    console.log('password', password)
+    console.log('email', email)
 
     const user = await User.compareCredentials(email, password)
     if (!user) {

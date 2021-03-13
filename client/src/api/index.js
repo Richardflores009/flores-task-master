@@ -3,8 +3,8 @@ import axios from 'axios';
 const url = 'http://localhost:3001'
 
 //* user routes
-export const signupUser = () => axios.post(`${url}/user`)
-export const loginUser = () => axios.post(`${url}/user/login`)
+export const signupUser = (userData) => axios.post(`${url}/user`, userData)
+export const loginUser = (loginData) => axios.post(`${url}/user/login`, loginData)
 export const logoutUser = () => axios.post(`${url}/user/logout`)
 export const logoutAllUser = () => axios.post(`${url}/user/logoutAll`)
 export const fetchProfile = () => axios.get(`${url}/user/me`)
@@ -16,6 +16,7 @@ export const DeleteFriend = () => axios.delete(`${url}/me`)
 //? room routes
 export const createRoom = () => axios.post(`${url}/room`)
 export const fetchRoom = () => axios.get(`${url}/room`)
+export const fetchOneRoom = () => axios.get(`${url}/room/:id`)
 export const UpdateRoom = () => axios.patch(`${url}/room/:id`)
 export const deleteRoom = () => axios.delete(`${url}/room/:id`)
 

@@ -13,13 +13,14 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import useStyles from './style'
 
 import Friends from './friends/friends'
+import {fetchRoom, fetchOneRoom} from '../../actions/room'
 
 function ResponsiveDrawer() {
   const classes = useStyles();
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch()
+    dispatch(fetchRoom())
     
   }, [dispatch])
 
